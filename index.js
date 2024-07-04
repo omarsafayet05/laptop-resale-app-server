@@ -36,6 +36,7 @@ async function run() {
     await client.connect();
     const userCollection = client.db("resaleUser").collection("users");
     const computerCollection = client.db("resaleUser").collection("computers");
+    const laptopBuyCollection = client.db("resaleUser").collection("laptopBuy");
     //users record
     app.post("/users", async (req, res) => {
       const user = req.body;
@@ -55,6 +56,14 @@ async function run() {
     //Get data related laptops
     app.get("/coms", async (req, res) => {
       const result = await computerCollection.find().toArray();
+      res.send(result);
+    });
+
+    //Post route relate to buy laptop
+
+    app.post("/buyerInfo", async (req, res) => {
+      const lapItems = req.body;
+      const result = await laptopBuyCollection.insertOne(lapItems);
       res.send(result);
     });
 
